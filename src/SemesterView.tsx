@@ -242,8 +242,8 @@ const NewCourse = (props: { onClick: () => void }) => (
     aria-label="Add new course"
     title="Add new course"
   >
-    <div className="z-[-1] absolute inset-0 text-blue-200 rounded bg-gradient-to-br from-pink-200 to-blue-200 filter blur-sm transition group-hover:blur group-focus-visible:blur group-hover:translate-y-0.5 group-active:blur-none shadow-sm group-hover:shadow-no"></div>
-    <div className="z-[-1] absolute inset-0 rounded bg-gradient-to-br from-pink-200 to-blue-300 transition-opacity opacity-50 group-hover:opacity-100 group-focus-visible:opacity-100"></div>
+    <div className="underlay text-blue-200 rounded bg-gradient-to-br from-pink-200 to-blue-200 filter blur-sm transition group-hover:blur group-focus-visible:blur group-hover:translate-y-0.5 group-active:blur-none shadow-sm group-hover:shadow-no"></div>
+    <div className="underlay rounded bg-gradient-to-br from-pink-200 to-blue-300 transition-opacity opacity-50 group-hover:opacity-100 group-focus-visible:opacity-100"></div>
     <PlusIcon className="h-full" />
   </button>
 );

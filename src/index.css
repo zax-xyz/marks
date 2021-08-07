@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .underlay {
+    @apply z-[-1] absolute inset-0;
+  }
+}
+
 html {
   /* scrollbar-width: thin; */
   scrollbar-color: #60a5fa transparent;

@@ -79,7 +79,9 @@ const App = observer(() => {
           ) : (
             <>
               <h1 className="text-blue-600 text-4xl font-semibold mb-4">Marks</h1>
-              <Route path="/:year/:semester" children={<SemesterView marks={marks} />} />
+              <Route path="/:year/:semester">
+                <SemesterView marks={marks} />
+              </Route>
             </>
           )}
         </div>

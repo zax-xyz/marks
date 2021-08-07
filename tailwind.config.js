@@ -7,7 +7,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      colors,
+      colors: {
+        sky: colors.sky,
+      },
       fontFamily: {
         sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
       },

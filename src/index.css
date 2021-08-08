@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .sidebar-btn {
+    @apply relative w-full flex items-center text-left rounded font-normal focus-visible:outline-none focus-visible:!bg-opacity-70 focus-visible:text-white focus-visible:ring ring-sky-300 px-3 py-1 cursor-pointer transition text-gray-100 bg-opacity-0 hover:shadow-sm hover:text-gray-100;
+  }
+
+  .sidebar-btn::before {
+    content: "";
+    @apply absolute inset-0 z-[-1] rounded bg-gradient-to-r from-blue-700 to-indigo-700 transition-opacity opacity-[var(--tw-bg-opacity)];
+  }
+
+  .sidebar-btn.active {
+    @apply text-white shadow hover:shadow-md hover:text-white;
+  }
+}
+
 @layer utilities {
   .underlay {
     @apply z-[-1] absolute inset-0;

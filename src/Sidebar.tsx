@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { ComponentProps, MouseEventHandler, useRef, useState } from "react";
+import { ComponentProps, useRef, useState } from "react";
 import { PencilIcon, PlusIcon } from "@heroicons/react/solid";
 import { TrashIcon } from "@heroicons/react/outline";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import { Marks, Year } from "./store";
 import { Semester } from "./store";
@@ -35,82 +35,39 @@ const YearButton = observer(({ marks, year, i }: { marks: Marks; year: Year; i: 
 
   return (
     <div key={i}>
-      <Link
+      <NavLink
         to={`/${i}/0`}
-        tabIndex={-1}
         onClick={e => {
-          if (icons.current?.contains(e.relatedTarget as Node)) {
-            e.stopPropagation();
+          if (icons.current?.contains(e.target as Node)) {
             e.preventDefault();
-            return false;
+          } else {
+            marks.setYear(i);
           }
         }}
+        isActive={() => active}
+        className="group sidebar-btn pr-0 hover:bg-opacity-20"
+        activeClassName="active bg-opacity-40 hover:!bg-opacity-60"
       >
-        <Button
-          active={active}
-          className={`pr-0 ${active ? "bg-opacity-40 hover:bg-opacity-60" : "hover:bg-opacity-20"}`}
-          onClick={() => marks.setYear(i)}
-        >
-          {editingName ? (
-            <Input
-              value={year.year}
-              onChange={e => marks.setYearName(i, e.currentTarget.value)}
-              onBlur={() => setEditingName(false)}
-            />
-          ) : (
-            year.year
-          )}
+        {editingName ? (
+          <Input
+            value={year.year}
+            onChange={e => marks.setYearName(i, e.currentTarget.value)}
+            onBlur={() => setEditingName(false)}
+          />
+        ) : (
+          year.year
+        )}
 
-          <div className="flex ml-auto" ref={icons}>
-            <Pencil
-              onClick={e => {
-                setEditingName(true);
-                e.stopPropagation();
-              }}
-            />
-            <Trash
-              onClick={e => {
-                marks.deleteYear(i);
-                e.stopPropagation();
-              }}
-            />
-          </div>
-        </Button>
-      </Link>
+        <div className="flex ml-auto" ref={icons}>
+          <Pencil onClick={() => setEditingName(true)} />
+          <Trash onClick={() => marks.deleteYear(i)} />
+        </div>
+      </NavLink>
 
       {active ? <Semesters semesters={year.semesters} marks={marks} /> : null}
     </div>
   );
 });
-
-const Button = ({
-  children,
-  className,
-  active,
-  onClick,
-  ...props
-}: ComponentProps<"button"> & {
-  children: any;
-  className?: string;
-  active?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}) => (
-  <button
-    className={`group relative w-full flex items-center text-left rounded focus-visible:outline-none focus-visible:!bg-opacity-70 focus-visible:text-white focus-visible:ring ring-sky-300 px-3 py-1 cursor-pointer transition ${
-      active
-        ? "text-white shadow hover:shadow-md hover:text-white"
-        : "text-gray-100 bg-opacity-0 hover:shadow-sm hover:text-gray-100"
-    } ${className}`}
-    onClick={e => {
-      e.currentTarget.blur();
-      onClick?.(e);
-    }}
-    {...props}
-  >
-    <div className="absolute inset-0 z-[-1] rounded bg-gradient-to-r from-blue-700 to-indigo-700 transition-opacity opacity-[var(--tw-bg-opacity)]"></div>
-    {children}
-  </button>
-);
 
 const Input = (props: ComponentProps<"input">) => (
   <input
@@ -163,53 +120,48 @@ const Semesters = observer(({ semesters, marks }: { semesters: Semester[]; marks
 
 const SemesterButton = observer(({ marks, sem, i }: { marks: Marks; sem: Semester; i: number }) => {
   const [editingName, setEditingName] = useState(false);
-  const { year, semester: activeSemester } = useParams<{ year: string; semester: string }>();
-  const active = i === Number.parseInt(activeSemester);
+  const { year } = useParams<{ year: string; semester: string }>();
+
+  const icons = useRef<HTMLDivElement>(null);
 
   return (
-    <Link to={`/${year}/${i}`} tabIndex={-1}>
-      <Button
-        key={i}
-        active={active}
-        className={`pr-0 ${
-          active ? "bg-opacity-30 hover:bg-opacity-50" : "hover:bg-opacity-[0.15]"
-        }`}
-        onClick={() => marks.setSemester(i)}
-      >
-        {editingName ? (
-          <Input
-            value={sem.name}
-            onChange={e => marks.setYearName(i, e.currentTarget.value)}
-            onBlur={() => setEditingName(false)}
-          />
-        ) : (
-          sem.name
-        )}
+    <NavLink
+      to={`/${year}/${i}`}
+      className="group sidebar-btn pr-0 hover:bg-opacity-[0.15]"
+      activeClassName="active bg-opacity-30 hover:!bg-opacity-50"
+      onClick={e => {
+        if (icons.current?.contains(e.target as Node)) {
+          e.preventDefault();
+        } else {
+          marks.setSemester(i);
+        }
+      }}
+    >
+      {editingName ? (
+        <Input
+          value={sem.name}
+          onChange={e => marks.setYearName(i, e.currentTarget.value)}
+          onBlur={() => setEditingName(false)}
+        />
+      ) : (
+        sem.name
+      )}
 
-        <div className="flex ml-auto">
-          <Pencil
-            onClick={() => {
-              setEditingName(true);
-            }}
-          />
-          <Trash
-            onClick={() => {
-              marks.deleteSemester(i);
-            }}
-          />
-        </div>
-      </Button>
-    </Link>
+      <div className="flex ml-auto" ref={icons}>
+        <Pencil onClick={() => setEditingName(true)} />
+        <Trash onClick={() => marks.deleteSemester(i)} />
+      </div>
+    </NavLink>
   );
 });
 
-const Plus = (props: Omit<ComponentProps<typeof Button>, "children">) => (
-  <Button
-    className="mt-0.5 transition bg-opacity-[0.075] hover:!bg-opacity-25 hover:!text-white"
+const Plus = (props: Omit<ComponentProps<"button">, "children">) => (
+  <button
+    className="sidebar-btn mt-0.5 transition bg-opacity-[0.075] hover:!bg-opacity-25 hover:!text-white"
     {...props}
   >
     <PlusIcon className="w-5 h-5 mx-auto" />
-  </Button>
+  </button>
 );
 
 export default Sidebar;

@@ -155,7 +155,7 @@ const SemesterButton = observer(({ marks, sem, i }: { marks: Marks; sem: Semeste
   );
 });
 
-const Plus = (props: Omit<ComponentProps<"button">, "children">) => (
+const Plus = (props: ComponentProps<"button">) => (
   <button
     className="sidebar-btn mt-0.5 transition bg-opacity-[0.075] hover:!bg-opacity-25 hover:!text-white"
     {...props}

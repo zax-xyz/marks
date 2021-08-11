@@ -47,10 +47,10 @@ const CourseView = observer((props: { course: Course; marks: Marks; idx: number 
   const editButton = useRef<HTMLButtonElement>(null);
 
   return (
-    <section className="flex flex-wrap gap-4 items-center xl:flex-nowrap xl:max-w-6xl">
+    <section className="flex flex-wrap items-center gap-4 xl:flex-nowrap xl:max-w-6xl">
       <div className="flex-1 flex-grow-[1.3]">
         <h1
-          className="flex text-2xl text-blue-600 mb-3"
+          className="flex mb-3 text-2xl text-blue-600"
           onBlur={e => {
             if (!e.currentTarget.contains(e.relatedTarget as Node)) {
               setEditingName(false);
@@ -74,21 +74,21 @@ const CourseView = observer((props: { course: Course; marks: Marks; idx: number 
 
           <button
             ref={editButton}
-            className="group ml-auto px-2 rounded outline-none focus-visible:ring ring-blue-500"
+            className="px-2 ml-auto rounded outline-none group focus-visible:ring ring-blue-500"
             onClick={() => setEditingName(!editingName)}
             aria-label="Edit course name"
             title="Edit course name"
           >
-            <PencilIcon className="w-5 h-5 transition-opacity opacity-30 group-hover:opacity-100 group-focus:opacity-100 outline-none ring-blue-500" />
+            <PencilIcon className="w-5 h-5 transition-opacity outline-none opacity-30 group-hover:opacity-100 group-focus:opacity-100 ring-blue-500" />
           </button>
 
           <button
-            className="group px-2 text-red-500 rounded outline-none focus-visible:ring ring-blue-500"
+            className="px-2 text-red-500 rounded outline-none group focus-visible:ring ring-blue-500"
             onClick={() => props.marks.deleteCourse(props.idx)}
             aria-label="Delete course"
             title="Delete course"
           >
-            <TrashIcon className="w-5 h-5 transition-opacity opacity-30 group-hover:opacity-100 group-focus:opacity-100 outline-none ring-blue-500" />
+            <TrashIcon className="w-5 h-5 transition-opacity outline-none opacity-30 group-hover:opacity-100 group-focus:opacity-100 ring-blue-500" />
           </button>
         </h1>
 
@@ -142,7 +142,7 @@ const Assessments = ({
         </div>
 
         <Input
-          className="w-14 md:w-16 ml-2 text-blue-500 text-right"
+          className="ml-2 text-right text-blue-500 w-14 md:w-16"
           label="Assessment mark"
           defaultValue={assessment.mark}
           onChange={e => {
@@ -150,7 +150,7 @@ const Assessments = ({
             if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { mark: newValue });
           }}
         />
-        <span className="flex items-center w-10 font-light text-sm self-end">
+        <span className="flex items-center self-end w-10 text-sm font-light">
           /
           <Input
             className="!p-1 w-full"
@@ -164,7 +164,7 @@ const Assessments = ({
         </span>
 
         <span
-          className="ml-2 w-12 text-sm font-light text-center text-indigo-600"
+          className="w-12 ml-2 text-sm font-light text-center text-indigo-600"
           aria-label="Assessment final percentage"
           title="Assessment final percentage"
         >
@@ -175,7 +175,7 @@ const Assessments = ({
 
     <FinalMark assessments={assessments} />
     <button
-      className="flex justify-center px-5 py-1.5 rounded-sm bg-blue-50 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500"
+      className="flex justify-center px-5 py-1.5 rounded transition bg-gradient-to-br from-blue-100 to-blue-200 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500 hover:shadow-md"
       onClick={() => {
         marks.addAssessment(idx);
       }}
@@ -213,19 +213,19 @@ const FinalMark = (props: { assessments: Assessment[] }) => {
 
   return (
     <li className="flex items-center">
-      <span className="font-semibold flex-1">Final Mark</span>
+      <span className="flex-1 font-semibold">Final Mark</span>
 
       <span className="flex items-center" aria-label="Final mark" title="Final mark">
         <span className="w-16 px-1.5 py-1 ml-4 text-blue-500 font-semibold text-right">
           {Math.round(totalMark * 100) / 100}
         </span>
-        <span className="w-10 text-sm self-end">
+        <span className="self-end w-10 text-sm">
           /<span className="p-1">{totalTotal}</span>
         </span>
       </span>
 
       <span
-        className="ml-2 w-12 text-sm font-semibold text-center text-indigo-600"
+        className="w-12 ml-2 text-sm font-semibold text-center text-indigo-600"
         aria-label="Final mark percentage"
         title="Final mark percentage"
       >
@@ -243,7 +243,7 @@ const NewCourse = (props: { onClick: () => void }) => (
     title="Add new course"
   >
     <div className="underlay text-blue-200 rounded bg-gradient-to-br from-pink-200 to-blue-200 filter blur-sm transition group-hover:blur group-focus-visible:blur group-hover:translate-y-0.5 group-active:blur-none shadow-sm group-hover:shadow-no"></div>
-    <div className="underlay rounded bg-gradient-to-br from-pink-200 to-blue-300 transition-opacity opacity-50 group-hover:opacity-100 group-focus-visible:opacity-100"></div>
+    <div className="transition-opacity rounded opacity-50 underlay bg-gradient-to-br from-pink-200 to-blue-300 group-hover:opacity-100 group-focus-visible:opacity-100"></div>
     <PlusIcon className="h-full" />
   </button>
 );

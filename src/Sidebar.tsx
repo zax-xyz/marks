@@ -16,7 +16,7 @@ const Sidebar = observer(({ marks, className }: { marks: Marks; className?: stri
   >
     <h1 className="pb-3 text-3xl">Years</h1>
 
-    <ul className="pl-2 text-xl flex flex-col gap-1">
+    <ul className="flex flex-col gap-1 pl-2 text-xl">
       {marks.years.map((year, i) => (
         <YearButton marks={marks} year={year} i={i} key={i} />
       ))}
@@ -45,7 +45,7 @@ const YearButton = observer(({ marks, year, i }: { marks: Marks; year: Year; i: 
           }
         }}
         isActive={() => active}
-        className="group sidebar-btn pr-0 hover:bg-opacity-20"
+        className="pr-0 group sidebar-btn hover:bg-opacity-20"
         activeClassName="active bg-opacity-40 hover:!bg-opacity-60"
       >
         {editingName ? (
@@ -85,13 +85,13 @@ const Input = (props: ComponentProps<"input">) => (
 
 const Pencil = (props: ComponentProps<"button">) => (
   <Icon label="Edit name" {...props}>
-    <PencilIcon className="w-5 h-5 p-1 px-2 box-content text-white" />
+    <PencilIcon className="box-content w-5 h-5 p-1 px-2 text-white" />
   </Icon>
 );
 
 const Trash = (props: ComponentProps<"button">) => (
   <Icon label="Delete" {...props}>
-    <TrashIcon className="w-5 h-5 p-1 px-2 box-content text-red-400" />
+    <TrashIcon className="box-content w-5 h-5 p-1 px-2 text-red-400" />
   </Icon>
 );
 
@@ -108,7 +108,7 @@ const Icon = ({ label, children, ...props }: ComponentProps<"button"> & { label:
 
 const Semesters = observer(({ semesters, marks }: { semesters: Semester[]; marks: Marks }) => {
   return (
-    <ul className="pl-4 py-1 text-base flex flex-col gap-1">
+    <ul className="flex flex-col gap-1 py-1 pl-4 text-base">
       {semesters.map((sem, i) => (
         <SemesterButton marks={marks} sem={sem} i={i} key={i} />
       ))}

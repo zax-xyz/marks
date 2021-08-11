@@ -44,13 +44,13 @@ const App = observer(() => {
     <BrowserRouter>
       <ScrollToTop />
 
-      <div className="App flex justify-center min-h-screen">
+      <div className="flex justify-center min-h-screen App">
         <Switch>
           <Route path="/:year/:semester">
             {/* Mobile */}
             <HideSidebar setSidebarActive={setSidebarActive} />
             <button
-              className="fixed top-5 right-5 lg:hidden w-12 h-12 p-2 z-20 rounded outline-none focus-visible:ring ring-sky-300"
+              className="fixed z-20 w-12 h-12 p-2 rounded outline-none top-5 right-5 lg:hidden focus-visible:ring ring-sky-300"
               onClick={() => setSidebarActive(!sidebarActive)}
             >
               <MenuIcon />
@@ -71,14 +71,14 @@ const App = observer(() => {
           </Route>
         </Switch>
 
-        <div className="px-6 py-4 md:px-10 md:py-8 lg:ml-80 max-w-7xl w-full h-screen overflow-y-auto">
+        <div className="w-full h-screen px-6 py-4 overflow-y-auto md:px-10 md:py-8 lg:ml-80 max-w-7xl">
           {marks.semester === undefined ? (
             <div className="flex items-center justify-center h-full">
-              <h1 className="text-indigo-500 text-4xl font-semibold">Nothing is selected!</h1>
+              <h1 className="text-4xl font-semibold text-indigo-500">Nothing is selected!</h1>
             </div>
           ) : (
             <>
-              <h1 className="text-blue-600 text-4xl font-semibold mb-4">Marks</h1>
+              <h1 className="mb-4 text-4xl font-semibold text-blue-600">Marks</h1>
               <Route path="/:year/:semester">
                 <SemesterView marks={marks} />
               </Route>

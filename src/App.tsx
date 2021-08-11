@@ -71,7 +71,7 @@ const App = observer(() => {
           </Route>
         </Switch>
 
-        <div className="px-6 py-4 md:px-10 md:py-8 lg:ml-80 max-w-7xl w-full">
+        <div className="px-6 py-4 md:px-10 md:py-8 lg:ml-80 max-w-7xl w-full h-screen overflow-y-auto">
           {marks.semester === undefined ? (
             <div className="flex items-center justify-center h-full">
               <h1 className="text-indigo-500 text-4xl font-semibold">Nothing is selected!</h1>

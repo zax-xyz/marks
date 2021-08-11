@@ -111,6 +111,7 @@ export class Marks {
   addCourse(course: string) {
     const lastId = this.courses[this.courses.length - 1]?.id ?? -1;
     this.courses = this.courses.concat({ name: course, assessments: [], id: lastId + 1 });
+    this.addAssessment(this.courses.length - 1);
   }
 
   setCourseName(course: number, name: string) {

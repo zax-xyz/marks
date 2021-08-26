@@ -119,7 +119,7 @@ const Assessments = ({
 
   useDidUpdateEffect(() => {
     weightingRef.current?.focus();
-  }, [assessments]);
+  }, [assessments.length]);
 
   return (
     <ul className="space-y-2">

@@ -9,6 +9,7 @@ import { Params } from "./App";
 import LineChart from "./LineChart";
 import "./SemesterView.css";
 import { Assessment, Course, Marks } from "./store";
+import { useDidUpdateEffect } from "./useDidUpdateEffect";
 
 const SemesterView = observer(({ marks }: { marks: Marks }) => {
   const { courses } = marks;
@@ -113,80 +114,87 @@ const Assessments = ({
   marks: Marks;
   assessments: Assessment[];
   idx: number;
-}) => (
-  <ul className="space-y-2">
-    {assessments.map((assessment, i) => (
-      <li key={i} className="flex items-center">
-        <Input
-          className="w-8 !p-1 font-light text-sm text-center mr-1"
-          label="Assessment weighting"
-          defaultValue={assessment.weighting}
-          onChange={e => {
-            const newValue = Number(e.currentTarget.value);
-            if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { weighting: newValue });
-          }}
-        />
+}) => {
+  const weightingRef = useRef<HTMLInputElement>(null);
 
-        <div className="relative flex-1 min-w-[8rem] sm:min-w-[12rem]">
-          <Input
-            className={`fade-out flex-1 w-full ${
-              assessment.name === "Final Exam" ? "text-yellow-600" : ""
-            }`}
-            label="Assessment name"
-            value={assessment.name}
-            onChange={e => {
-              marks.changeAssessment(idx, i, { name: e.currentTarget.value });
-            }}
-          />
-          <div className="absolute top-0 right-1.5 w-3 h-full bg-gradient-to-r from-transparent to-white"></div>
-        </div>
+  useDidUpdateEffect(() => {
+    weightingRef.current?.focus();
+  }, [assessments]);
 
-        <Input
-          className="ml-2 text-right text-blue-500 w-14 md:w-16"
-          label="Assessment mark"
-          defaultValue={assessment.mark}
-          onChange={e => {
-            const newValue = Number(e.currentTarget.value);
-            if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { mark: newValue });
-          }}
-        />
-        <span className="flex items-center self-end w-10 text-sm font-light">
-          /
+  return (
+    <ul className="space-y-2">
+      {assessments.map((assessment, i) => (
+        <li key={i} className="flex items-center">
           <Input
-            className="!p-1 w-full"
-            label="Asssessment total mark"
-            defaultValue={assessment.total}
+            ref={i === assessments.length - 1 ? weightingRef : null}
+            className="w-8 !p-1 font-light text-sm text-center mr-1"
+            label="Assessment weighting"
+            defaultValue={assessment.weighting}
             onChange={e => {
               const newValue = Number(e.currentTarget.value);
-              if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { total: newValue });
+              if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { weighting: newValue });
             }}
           />
-        </span>
 
-        <span
-          className="w-12 ml-2 text-sm font-light text-center text-indigo-600"
-          aria-label="Assessment final percentage"
-          title="Assessment final percentage"
-        >
-          {Math.round((assessment.mark / assessment.total + Number.EPSILON) * 10000) / 100}%
-        </span>
-      </li>
-    ))}
+          <div className="relative flex-1 min-w-[8rem] sm:min-w-[12rem]">
+            <Input
+              className={`fade-out flex-1 w-full ${
+                assessment.name === "Final Exam" ? "text-yellow-600" : ""
+              }`}
+              label="Assessment name"
+              value={assessment.name}
+              onChange={e => {
+                marks.changeAssessment(idx, i, { name: e.currentTarget.value });
+              }}
+            />
+            <div className="absolute top-0 right-1.5 w-3 h-full bg-gradient-to-r from-transparent to-white"></div>
+          </div>
 
-    <FinalMark assessments={assessments} />
+          <Input
+            className="ml-2 text-right text-blue-500 w-14 md:w-16"
+            label="Assessment mark"
+            defaultValue={assessment.mark}
+            onChange={e => {
+              const newValue = Number(e.currentTarget.value);
+              if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { mark: newValue });
+            }}
+          />
+          <span className="flex items-center self-end w-10 text-sm font-light">
+            /
+            <Input
+              className="!p-1 w-full"
+              label="Asssessment total mark"
+              defaultValue={assessment.total}
+              onChange={e => {
+                const newValue = Number(e.currentTarget.value);
+                if (!Number.isNaN(newValue)) marks.changeAssessment(idx, i, { total: newValue });
+              }}
+            />
+          </span>
 
-    <button
-      className="flex justify-center px-6 py-1.5 rounded transition bg-gradient-to-br from-blue-100 to-blue-200 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500 hover:shadow-md"
-      onClick={() => {
-        marks.addAssessment(idx);
-      }}
-      aria-label="Add new assessment"
-      title="Add new assessment"
-    >
-      <PlusIcon className="w-4 h-4" />
-    </button>
-  </ul>
-);
+          <span
+            className="w-12 ml-2 text-sm font-light text-center text-indigo-600"
+            aria-label="Assessment final percentage"
+            title="Assessment final percentage"
+          >
+            {Math.round((assessment.mark / assessment.total + Number.EPSILON) * 10000) / 100}%
+          </span>
+        </li>
+      ))}
+
+      <FinalMark assessments={assessments} />
+
+      <button
+        className="flex justify-center px-6 py-1.5 rounded transition bg-gradient-to-br from-blue-100 to-blue-200 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500 hover:shadow-md"
+        onClick={() => marks.addAssessment(idx)}
+        aria-label="Add new assessment"
+        title="Add new assessment"
+      >
+        <PlusIcon className="w-4 h-4" />
+      </button>
+    </ul>
+  );
+};
 
 const Input = forwardRef<HTMLInputElement, ComponentProps<"input"> & { label?: string }>(
   ({ label, ...props }, ref) => (

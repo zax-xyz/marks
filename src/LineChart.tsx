@@ -79,11 +79,11 @@ const LineChart = ({ course, className }: { course: Course; className?: string }
     reaction(
       () => course.assessments,
       () => {
-        const { labels, data } = processMarks();
-        chart.data.labels = labels;
-        chart.data.datasets[0].data = data;
+        const { labels: newLabels, data: newData } = processMarks();
+        chart.data.labels = newLabels;
+        chart.data.datasets[0].data = newData;
         chart.update();
-      }
+      },
     );
     // eslint-disable-next-line
   }, [processMarks]);

@@ -174,8 +174,9 @@ const Assessments = ({
     ))}
 
     <FinalMark assessments={assessments} />
+
     <button
-      className="flex justify-center px-5 py-1.5 rounded transition bg-gradient-to-br from-blue-100 to-blue-200 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500 hover:shadow-md"
+      className="flex justify-center px-6 py-1.5 rounded transition bg-gradient-to-br from-blue-100 to-blue-200 shadow text-indigo-700 outline-none focus-visible:ring ring-blue-500 hover:shadow-md"
       onClick={() => {
         marks.addAssessment(idx);
       }}
@@ -204,7 +205,7 @@ const Input = forwardRef<HTMLInputElement, ComponentProps<"input"> & { label?: s
         props.className ?? ""
       } px-1.5 py-1.5 ring-blue-500 rounded-sm transition outline-none hover:shadow focus:ring-2 focus:shadow-md`}
     />
-  )
+  ),
 );
 
 const FinalMark = (props: { assessments: Assessment[] }) => {

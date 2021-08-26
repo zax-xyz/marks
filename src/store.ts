@@ -140,6 +140,12 @@ export class Marks {
     Object.assign(newAssessments[assessmentIdx], newValues);
     this.courses[course].assessments = newAssessments;
   }
+
+  deleteAssessment(course: number, assessmentIdx: number) {
+    const newAssessments = this.courses[course].assessments.slice();
+    newAssessments.splice(assessmentIdx, 1);
+    this.courses[course].assessments = newAssessments;
+  }
 }
 
 const hydrate = create({});

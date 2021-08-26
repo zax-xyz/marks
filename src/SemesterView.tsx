@@ -124,7 +124,7 @@ const Assessments = ({
   return (
     <ul className="space-y-2">
       {assessments.map((assessment, i) => (
-        <li key={i} className="flex items-center">
+        <li key={i} className="relative flex items-center group">
           <Input
             ref={i === assessments.length - 1 ? weightingRef : null}
             className="w-8 !p-1 font-light text-sm text-center mr-1"
@@ -179,6 +179,15 @@ const Assessments = ({
           >
             {Math.round((assessment.mark / assessment.total + Number.EPSILON) * 10000) / 100}%
           </span>
+
+          <div className="absolute right-0 flex items-center invisible w-12 h-full transition-all opacity-0 group-hover:visible bg-gradient-to-r from-transparent to-white group-hover:opacity-100">
+            <button
+              className="w-full h-full rounded focus-visible:ring ring-blue-500"
+              onClick={() => marks.deleteAssessment(idx, i)}
+            >
+              <TrashIcon className="w-5 mx-auto text-red-500" />
+            </button>
+          </div>
         </li>
       ))}
 

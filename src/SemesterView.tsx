@@ -118,7 +118,9 @@ const Assessments = ({
   const weightingRef = useRef<HTMLInputElement>(null);
 
   useDidUpdateEffect(() => {
-    weightingRef.current?.focus();
+    const elem = weightingRef.current;
+    elem?.focus();
+    elem?.select();
   }, [assessments.length]);
 
   return (

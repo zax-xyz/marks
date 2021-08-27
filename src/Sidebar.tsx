@@ -4,8 +4,7 @@ import { PencilIcon, PlusIcon } from "@heroicons/react/solid";
 import { TrashIcon } from "@heroicons/react/outline";
 import { NavLink, useParams } from "react-router-dom";
 
-import { Marks, Year } from "./store";
-import { Semester } from "./store";
+import { Marks, Semester, Year } from "./store";
 import { Params } from "./App";
 
 const Sidebar = observer(({ marks, className }: { marks: Marks; className?: string }) => (

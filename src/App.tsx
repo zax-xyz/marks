@@ -6,7 +6,7 @@ import SemesterView from "./SemesterView";
 import Sidebar from "./Sidebar";
 import { marks } from "./store";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { MenuIcon } from "@heroicons/react/solid";
+import { NavBar } from "./NavBar";
 
 export type Params = {
   year: string;
@@ -44,20 +44,14 @@ const App = observer(() => {
     <BrowserRouter>
       <ScrollToTop />
 
-      <div className="flex justify-center min-h-screen App">
+      <div className="flex flex-col items-center h-screen pt-12 md:pt-0 App">
         <Switch>
           <Route path="/:year/:semester">
             {/* Mobile */}
             <HideSidebar setSidebarActive={setSidebarActive} />
-            <button
-              className="fixed z-20 w-12 h-12 p-2 rounded outline-none top-5 right-5 lg:hidden focus-visible:ring ring-sky-300"
-              onClick={() => setSidebarActive(!sidebarActive)}
-            >
-              <MenuIcon />
-            </button>
             <Sidebar
               marks={marks}
-              className={`!block lg:!hidden z-10 transition-all duration-[350ms] -translate-x-full ${
+              className={`!block lg:!hidden top-12 z-10 transition-all duration-[350ms] -translate-x-full ${
                 sidebarActive ? "translate-x-0 !w-full" : "invisible"
               }`}
             />
@@ -71,7 +65,8 @@ const App = observer(() => {
           </Route>
         </Switch>
 
-        <div className="w-full h-screen px-6 py-4 overflow-y-auto md:px-10 md:py-8 lg:ml-80 max-w-7xl">
+        <div className="w-full h-full px-6 py-4 overflow-y-auto md:px-10 md:py-8 lg:ml-80 max-w-7xl">
+          <NavBar marks={marks} sidebarActive={sidebarActive} setSidebarActive={setSidebarActive} />
           {marks.semester === undefined ? (
             <div className="flex items-center justify-center h-full">
               <h1 className="text-4xl font-semibold text-indigo-500">Nothing is selected!</h1>

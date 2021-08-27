@@ -12,7 +12,7 @@ const Sidebar = observer(({ marks, className }: { marks: Marks; className?: stri
   <nav
     className={`${
       className ?? ""
-    } hidden fixed top-0 left-0 w-80 h-screen px-8 py-8 text-lg font-semibold text-white bg-gradient-to-br from-blue-400 to-indigo-400 shadow-2xl lg:block`}
+    } hidden fixed top-0 left-0 bottom-0 w-80 px-8 py-8 text-lg font-semibold text-white bg-gradient-to-br from-blue-400 to-indigo-400 shadow-2xl lg:block`}
   >
     <h1 className="pb-3 text-3xl">Years</h1>
 

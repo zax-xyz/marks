@@ -43,42 +43,47 @@ const App = observer(() => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <Switch>
+        <Route path="/:year/:semester">
+          {/* Mobile */}
+          <HideSidebar setSidebarActive={setSidebarActive} />
+          <Sidebar
+            marks={marks}
+            className={`!block lg:!hidden top-12 z-10 transition-all duration-[350ms] -translate-x-full ${
+              sidebarActive ? "translate-x-0 !w-full" : "invisible"
+            }`}
+          />
 
-      <div className="flex flex-col items-center h-screen pt-12 md:pt-0 App">
-        <Switch>
-          <Route path="/:year/:semester">
-            {/* Mobile */}
-            <HideSidebar setSidebarActive={setSidebarActive} />
-            <Sidebar
+          {/* Desktop */}
+          <Sidebar marks={marks} />
+        </Route>
+
+        <Route path="*">
+          <Redirect to="/0/0" />
+        </Route>
+      </Switch>
+
+      <div className="h-screen pt-12 lg:pt-0">
+        <div className="flex flex-col items-center w-full h-full overflow-y-auto">
+          <div className="w-full h-full px-6 py-4 md:px-10 md:py-8 lg:ml-80 max-w-7xl">
+            <NavBar
               marks={marks}
-              className={`!block lg:!hidden top-12 z-10 transition-all duration-[350ms] -translate-x-full ${
-                sidebarActive ? "translate-x-0 !w-full" : "invisible"
-              }`}
+              sidebarActive={sidebarActive}
+              setSidebarActive={setSidebarActive}
             />
-
-            {/* Desktop */}
-            <Sidebar marks={marks} />
-          </Route>
-
-          <Route path="*">
-            <Redirect to="/0/0" />
-          </Route>
-        </Switch>
-
-        <div className="w-full h-full px-6 py-4 overflow-y-auto md:px-10 md:py-8 lg:ml-80 max-w-7xl">
-          <NavBar marks={marks} sidebarActive={sidebarActive} setSidebarActive={setSidebarActive} />
-          {marks.semester === undefined ? (
-            <div className="flex items-center justify-center h-full">
-              <h1 className="text-4xl font-semibold text-indigo-500">Nothing is selected!</h1>
-            </div>
-          ) : (
-            <>
-              <h1 className="mb-4 text-4xl font-semibold text-blue-600">Marks</h1>
-              <Route path="/:year/:semester">
-                <SemesterView marks={marks} />
-              </Route>
-            </>
-          )}
+            {marks.semester === undefined ? (
+              <div className="flex items-center justify-center h-full">
+                <h1 className="text-4xl font-semibold text-indigo-500">Nothing is selected!</h1>
+              </div>
+            ) : (
+              <>
+                <h1 className="mb-4 text-4xl font-semibold text-blue-600">Marks</h1>
+                <Route path="/:year/:semester">
+                  <SemesterView marks={marks} />
+                </Route>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </BrowserRouter>

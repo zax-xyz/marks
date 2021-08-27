@@ -16,7 +16,7 @@ const SemesterView = observer(({ marks }: { marks: Marks }) => {
   const { year, semester } = useParams<Params>();
 
   return (
-    <TransitionGroup appear={true} exit={false} className="space-y-8">
+    <TransitionGroup appear={true} exit={false} className="pb-8 space-y-8">
       {marks.courses?.map((course, i) => (
         <CSSTransition
           key={`${year}.${semester}.${course.id}`}

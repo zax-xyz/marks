@@ -4,12 +4,12 @@ import { observer } from "mobx-react-lite";
 import { ComponentProps, forwardRef, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { Params } from "./App";
+import { Params } from "../App";
 
-import LineChart from "./LineChart";
+import LineChart from "../../components/LineChart";
 import "./SemesterView.css";
-import { Assessment, Course, Marks } from "./store";
-import { useDidUpdateEffect } from "./useDidUpdateEffect";
+import { Assessment, Course, Marks } from "../../store";
+import { useDidUpdateEffect } from "../../useDidUpdateEffect";
 
 const SemesterView = observer(({ marks }: { marks: Marks }) => {
   const { courses } = marks;

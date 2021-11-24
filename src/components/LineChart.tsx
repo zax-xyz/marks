@@ -9,7 +9,7 @@ import {
   PointElement,
   Tooltip,
 } from "chart.js";
-import { Course } from "./store";
+import { Course } from "../store";
 
 Chart.register(CategoryScale, LinearScale, LineController, PointElement, LineElement, Tooltip);
 Chart.defaults.font.family =

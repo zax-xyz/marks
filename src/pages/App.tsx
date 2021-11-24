@@ -2,11 +2,11 @@ import { BrowserRouter, Redirect, Route, Switch, useLocation, useParams } from "
 import { observer } from "mobx-react-lite";
 
 import "./App.css";
-import SemesterView from "./SemesterView";
-import Sidebar from "./Sidebar";
-import { marks } from "./store";
+import SemesterView from "./SemesterView/SemesterView";
+import Sidebar from "../components/Sidebar";
+import { marks } from "../store";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { NavBar } from "./NavBar";
+import { NavBar } from "../components/NavBar";
 
 export type Params = {
   year: string;

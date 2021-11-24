@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import { Dispatch, SetStateAction } from "react";
-import { Marks } from "./store";
+import { Marks } from "../store";
 
 type NavBarProps = {
   marks: Marks;

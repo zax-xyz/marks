@@ -65,8 +65,8 @@ const App = observer(() => {
 
       <NavBar marks={marks} sidebarActive={sidebarActive} setSidebarActive={setSidebarActive} />
       <div className="h-screen pt-12 lg:pt-0">
-        <div className="flex flex-col items-center w-full h-full overflow-y-auto">
-          <div className="w-full h-full px-6 py-4 md:px-10 md:py-8 lg:ml-80 max-w-7xl">
+        <div className="flex flex-col items-center w-full h-full overflow-y-auto lg:pl-80">
+          <div className="w-full h-full px-6 py-4 md:px-10 md:py-8 max-w-7xl">
             {marks.semester === undefined ? (
               <div className="flex items-center justify-center h-full">
                 <h1 className="text-4xl font-semibold text-indigo-500">Nothing is selected!</h1>
